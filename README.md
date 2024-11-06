@@ -78,7 +78,7 @@ You will notice the following:
 
 To use the action you will need to make it possible to authenticate with google.
 
-- Login to google api console (https://console.cloud.google.com/)
+- Login to [google API console](https://console.cloud.google.com/)
 - In library search and enable `Google Sheets API`
 - In the credentials section, click on `Manage service account` and click on
   `+ Create Service Account`
