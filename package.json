@@ -67,7 +67,11 @@
     ]
   },
   "dependencies": {
-    "@actions/core": "^1.11.1"
+    "@actions/core": "^1.11.1",
+    "csv-parse": "^5.5.6",
+    "date-fns": "^4.1.0",
+    "google-auth-library": "^9.14.2",
+    "google-spreadsheet": "^4.1.4"
   },
   "devDependencies": {
     "@github/local-action": "^2.1.3",
