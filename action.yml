@@ -1,23 +1,56 @@
-name: 'The name of your action here'
-description: 'Provide a description here'
-author: 'Your name or organization here'
+name: 'CSV to Google Sheets'
+description: 'Upload the content of a CSV file to a Google Sheets document.'
+author: 'fgerthoffert'
 
 # Add your action's branding here. This will appear on the GitHub Marketplace.
 branding:
-  icon: 'heart'
-  color: 'red'
+  icon: activity
+  color: green
 
 # Define your inputs here.
 inputs:
-  milliseconds:
-    description: 'Your input description here'
+  csv_filepath:
+    description: 'Full file path to the CSV file to be processed'
     required: true
-    default: '1000'
+    default: ''
+  gsheet_auth_email:
+    description: 'Email of an authorized user'
+    required: true
+    default: ''
+  gsheet_auth_pkey:
+    description: 'Private Key of an authorized user'
+    required: true
+    default: ''
+  gsheet_id:
+    description: 'ID of the google spreadsheet to be updated'
+    required: true
+    default: ''
+  gsheet_worksheet_title:
+    description: 'Title of the worksheet to update'
+    required: true
+    default: ''
+  gsheet_header_row:
+    description:
+      'Row number of the Google Sheet containing the headers. These headers must
+      match with the CSV headers to be populated, otherwise new ones (columns)
+      will be added.'
+    required: true
+    default: '1'
+  gsheet_title_key:
+    description: 'Title to be used as an ID to match with the CSV headers.'
+    required: true
+    default: 'Name'
+  gsheet_url:
+    description:
+      'URL to access the Google Sheet, only used to add this to the action
+      summary'
+    required: true
+    default: ''
 
 # Define your outputs here.
 outputs:
-  time:
-    description: 'Your output description here'
+  gsheet_url:
+    description: 'If provided as an input, URL to access the Google Sheet'
 
 runs:
   using: node20
