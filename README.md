@@ -27,7 +27,8 @@ GitHub Action.
 
 This action takes data from a CSV and adds it to an existing Worksheet in a
 Google Sheets. It is compatible with sheets already containing data and can
-handle additional columns (for example to annotate data coming from the CSV).
+handle columns not presents in the CSV (for example to annotate data coming from
+the CSV).
 
 It supports the following features:
 
@@ -74,9 +75,14 @@ You will notice the following:
 
 ## Quotas and rate limits
 
-The action has very primitive handling of quotas. Since seems that by default
-the write quotas are limited to 60 write calls, per minute and per user, a sleep
-of 1s has been added between write operations.
+This action has very primitive handling of quotas. By default the write quotas
+are limited to 60 write calls, per minute and per user.
+
+The following mechanisms are in place for write operations:
+
+- Sleep for 1s between each API call
+- Sleep for 60s in case of API call failure
+- Retries failures 3 times, exit the action with an error after that number
 
 # :gear: Configuration
 
