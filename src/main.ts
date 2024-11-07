@@ -129,10 +129,10 @@ export async function run(): Promise<void> {
             )
             for (const key in csvRow) {
               matchingRow.set(key, csvRow[key])
-              const successful: boolean = await saveRow(matchingRow)
-              if (!successful) {
-                throw new Error('Unable to update a row, exiting...')
-              }
+            }
+            const successful: boolean = await saveRow(matchingRow)
+            if (!successful) {
+              throw new Error('Unable to update a row, exiting...')
             }
           } else {
             core.info(

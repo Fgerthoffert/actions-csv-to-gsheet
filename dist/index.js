@@ -55223,10 +55223,10 @@ async function run() {
                     core.info(`[UPDATE] - Data with id: ${csvRow[rowId]} found in Google Worksheet, updating an existing row`);
                     for (const key in csvRow) {
                         matchingRow.set(key, csvRow[key]);
-                        const successful = await (0, utils_1.saveRow)(matchingRow);
-                        if (!successful) {
-                            throw new Error('Unable to update a row, exiting...');
-                        }
+                    }
+                    const successful = await (0, utils_1.saveRow)(matchingRow);
+                    if (!successful) {
+                        throw new Error('Unable to update a row, exiting...');
                     }
                 }
                 else {
