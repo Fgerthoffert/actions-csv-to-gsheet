@@ -72,6 +72,12 @@ You will notice the following:
   in the CSV
 - New row are added at the bottom of the spreadsheet (next empty row)
 
+## Quotas and rate limits
+
+The action has very primitive handling of quotas. Since seems that by default
+the write quotas are limited to 60 write calls, per minute and per user, a sleep
+of 1s has been added between write operations.
+
 # :gear: Configuration
 
 ## Google Authentication
