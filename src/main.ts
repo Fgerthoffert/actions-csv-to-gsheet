@@ -9,7 +9,7 @@ import * as core from '@actions/core'
 import * as fs from 'fs'
 import { parse } from 'csv-parse/sync'
 
-import { getWorksheet, timeSinceStart, formatDate } from './utils'
+import { getWorksheet, timeSinceStart, formatDate, sleep } from './utils'
 
 interface CSVData {
   [key: string]: string
@@ -89,6 +89,8 @@ export async function run(): Promise<void> {
             ...workSheet.headerValues,
             ...missingHeaders
           ])
+          await sleep(1000)
+
           core.info(
             `Missing headers have been added to the worksheet, headers are now: ${JSON.stringify(workSheet.headerValues)}`
           )
@@ -130,6 +132,8 @@ export async function run(): Promise<void> {
             }
             await workSheet.addRow(rowObject)
           }
+          // Wait 1.2s between requests to avoid hitting Google API rate limit => https://support.google.com/a/answer/6301355?
+          await sleep(1000)
         }
       }
     )

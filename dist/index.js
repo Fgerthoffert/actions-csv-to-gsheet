@@ -55203,6 +55203,7 @@ async function run() {
                     ...workSheet.headerValues,
                     ...missingHeaders
                 ]);
+                await (0, utils_1.sleep)(1000);
                 core.info(`Missing headers have been added to the worksheet, headers are now: ${JSON.stringify(workSheet.headerValues)}`);
             }
         });
@@ -55234,6 +55235,8 @@ async function run() {
                     }
                     await workSheet.addRow(rowObject);
                 }
+                // Wait 1.2s between requests to avoid hitting Google API rate limit => https://support.google.com/a/answer/6301355?
+                await (0, utils_1.sleep)(1000);
             }
         });
         if (core.getInput('gsheet_url') !== '') {
@@ -55415,6 +55418,31 @@ var __exportStar = (this && this.__exportStar) || function(m, exports) {
 Object.defineProperty(exports, "__esModule", ({ value: true }));
 __exportStar(__nccwpck_require__(35933), exports);
 __exportStar(__nccwpck_require__(91413), exports);
+__exportStar(__nccwpck_require__(70490), exports);
+
+
+/***/ }),
+
+/***/ 70490:
+/***/ ((__unused_webpack_module, exports) => {
+
+"use strict";
+
+Object.defineProperty(exports, "__esModule", ({ value: true }));
+exports.sleep = sleep;
+/**
+ * sleep for a number of milliseconds.
+ * @param milliseconds The number of milliseconds to sleep.
+ * @returns {Promise<string>} Resolves with 'done!' after the wait is over.
+ */
+async function sleep(milliseconds) {
+    return new Promise(resolve => {
+        if (isNaN(milliseconds)) {
+            throw new Error('milliseconds not a number');
+        }
+        setTimeout(() => resolve('done!'), milliseconds);
+    });
+}
 
 
 /***/ }),
