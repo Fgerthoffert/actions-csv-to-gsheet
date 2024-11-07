@@ -125,7 +125,7 @@ jobs:
   get-org-repos:
     runs-on: ubuntu-latest
     steps:
-      - name: Create Release Notes
+      - name: Push a CSV file to Google Sheets
         # Replace main by the release of your choice
         uses: fgerthoffert/actions-csv-to-gsheet@main
         with:
