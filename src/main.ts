@@ -153,7 +153,7 @@ export async function run(): Promise<void> {
 
     if (core.getInput('gsheet_url') !== '') {
       core.notice(
-        `Google Spreadsheet avaialble here: ${core.getInput('gsheet_url')}`
+        `Google Spreadsheet available here: ${core.getInput('gsheet_url')}`
       )
     }
   } catch (error) {

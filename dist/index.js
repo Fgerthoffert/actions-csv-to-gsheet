@@ -55243,7 +55243,7 @@ async function run() {
             }
         });
         if (core.getInput('gsheet_url') !== '') {
-            core.notice(`Google Spreadsheet avaialble here: ${core.getInput('gsheet_url')}`);
+            core.notice(`Google Spreadsheet available here: ${core.getInput('gsheet_url')}`);
         }
     }
     catch (error) {
