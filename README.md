@@ -27,7 +27,8 @@ GitHub Action.
 
 This action takes data from a CSV and adds it to an existing Worksheet in a
 Google Sheets. It is compatible with sheets already containing data and can
-handle additional columns (for example to annotate data coming from the CSV).
+handle columns not presents in the CSV (for example to annotate data coming from
+the CSV).
 
 It supports the following features:
 
@@ -71,6 +72,17 @@ You will notice the following:
 - A4, A6 and A9 were created, Col C and Col E were left empty since not present
   in the CSV
 - New row are added at the bottom of the spreadsheet (next empty row)
+
+## Quotas and rate limits
+
+This action has very primitive handling of quotas. By default the write quotas
+are limited to 60 write calls, per minute and per user.
+
+The following mechanisms are in place for write operations:
+
+- Sleep for 1s between each API call
+- Sleep for 60s in case of API call failure
+- Retries failures 3 times, exit the action with an error after that number
 
 # :gear: Configuration
 
@@ -125,7 +137,7 @@ jobs:
   get-org-repos:
     runs-on: ubuntu-latest
     steps:
-      - name: Create Release Notes
+      - name: Push a CSV file to Google Sheets
         # Replace main by the release of your choice
         uses: fgerthoffert/actions-csv-to-gsheet@main
         with:

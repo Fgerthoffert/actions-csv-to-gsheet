@@ -9,7 +9,14 @@ import * as core from '@actions/core'
 import * as fs from 'fs'
 import { parse } from 'csv-parse/sync'
 
-import { getWorksheet, timeSinceStart, formatDate } from './utils'
+import {
+  getWorksheet,
+  timeSinceStart,
+  formatDate,
+  setHeaderRow,
+  saveRow,
+  addRow
+} from './utils'
 
 interface CSVData {
   [key: string]: string
@@ -85,10 +92,14 @@ export async function run(): Promise<void> {
           )
 
           // Adding the missing headers to the worksheet
-          await workSheet.setHeaderRow([
-            ...workSheet.headerValues,
-            ...missingHeaders
-          ])
+          const successful: boolean = await setHeaderRow(
+            workSheet,
+            missingHeaders
+          )
+          if (!successful) {
+            throw new Error('Unable to set the header row, exiting...')
+          }
+
           core.info(
             `Missing headers have been added to the worksheet, headers are now: ${JSON.stringify(workSheet.headerValues)}`
           )
@@ -118,7 +129,10 @@ export async function run(): Promise<void> {
             )
             for (const key in csvRow) {
               matchingRow.set(key, csvRow[key])
-              await matchingRow.save()
+            }
+            const successful: boolean = await saveRow(matchingRow)
+            if (!successful) {
+              throw new Error('Unable to update a row, exiting...')
             }
           } else {
             core.info(
@@ -128,7 +142,10 @@ export async function run(): Promise<void> {
             for (const key in csvRow) {
               rowObject[key] = csvRow[key]
             }
-            await workSheet.addRow(rowObject)
+            const successful: boolean = await addRow(workSheet, rowObject)
+            if (!successful) {
+              throw new Error('Unable to create a row, exiting...')
+            }
           }
         }
       }
@@ -136,7 +153,7 @@ export async function run(): Promise<void> {
 
     if (core.getInput('gsheet_url') !== '') {
       core.notice(
-        `Google Spreadsheet avaialble here: ${core.getInput('gsheet_url')}`
+        `Google Spreadsheet available here: ${core.getInput('gsheet_url')}`
       )
     }
   } catch (error) {
